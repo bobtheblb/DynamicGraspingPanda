@@ -35,11 +35,15 @@ class CartesianPanda(Node):
         self._box_state_req.name = 'box'
         self._box_state_req.reference_frame = 'world'
 
+        self._planning_upper_bound = 5
+
     def get_box_state(self):
         future = self._box_state_client.call_async(self._box_state_req)
         rclpy.spin_until_future_complete(self, future)
-        res = future.result().state.pose.position
-        return (res.x, res.y, res.z)
+        state = future.result().state
+        pose = state.pose.position
+        twist = state.twist.linear
+        return ((pose.x, pose.y, pose.z), (twist.x, twist.y, twist.z))
 
     def move_to_pose(self, x, y, z, yaw, pitch, roll, speed=1.0):
         """
@@ -96,26 +100,32 @@ class CartesianPanda(Node):
         msg = MoveG.Goal()
         msg.goal = float(width) # FIX: Send float, not string
         
-        self._gripper_client.send_goal_async(msg)
-        time.sleep(1.0) # Wait for gripper to actuate
+        send_future = self._gripper_client.send_goal_async(msg)
+        time.sleep(5)
 
 def main(args=None):
     rclpy.init(args=args)
     node = CartesianPanda()
 
     try:
-        (goal_x, goal_y, goal_z) = node.get_box_state()
-
         # 1. Open Hand (0.08m)
-        node.grip(0.04)
+        # node.grip(0.04)
 
         # 2. Ready Position (High up)
         # X=0.5, Z=0.6, Pitch=180 (Pointing straight down)
         node.move_to_pose(0.106, 0.0, 1.7, -90, -45, -90)
-        time.sleep(0.5)
+        
+        (x, y, z), (vx, vy, vz) = node.get_box_state()
+        node.get_logger().info(f"Got box state: {((x, y, z), (vx, vy, vz))}")
 
-        node.move_to_pose(goal_x, goal_y, goal_z + 0.15, 0, 180, 0)
-        time.sleep(0.5)
+        predicted_x = x
+        predicted_y = y + vy * (node._planning_upper_bound)
+        predicted_z = z
+        node.get_logger().info(f"Predicted box pose: {(predicted_x, predicted_y, predicted_z)}")
+
+        node.move_to_pose(predicted_x, predicted_y, predicted_z + 0.15, 0, 180, 0)
+
+        # node.grip(0.0)
 
         # 3. Grasp Position (Low, near conveyor)
         # Z=0.25 is typically a safe grasp height for objects on the belt
