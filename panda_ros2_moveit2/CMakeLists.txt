@@ -42,4 +42,10 @@ install(
     share/${PROJECT_NAME}
 )
 
+# ===== PYTHON SCRIPTS ===== #
+install(PROGRAMS
+  scripts/get_object_state.py
+  DESTINATION lib/${PROJECT_NAME} 
+)
+
 ament_package()
