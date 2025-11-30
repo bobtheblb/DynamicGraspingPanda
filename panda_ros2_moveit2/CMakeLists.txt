@@ -48,4 +48,9 @@ install(PROGRAMS
   DESTINATION lib/${PROJECT_NAME} 
 )
 
+install(PROGRAMS
+  scripts/control_arm.py
+  DESTINATION lib/${PROJECT_NAME} 
+)
+
 ament_package()

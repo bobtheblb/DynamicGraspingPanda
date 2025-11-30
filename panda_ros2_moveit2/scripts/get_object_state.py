@@ -24,9 +24,9 @@ class PandaControl(Node):
 def main(args=None):
     rclpy.init(args=args)
     panda_controller = PandaControl()
-    response = panda_controller.get_object_state()
-
-    panda_controller.get_logger().info(f"Result: {response}")
+    while rclpy.ok():
+        response = panda_controller.get_object_state()
+        panda_controller.get_logger().info(f"Box XYZ: {response.state.pose.position}")
 
     panda_controller.destroy_node()
     rclpy.shutdown()
