@@ -1,0 +1,229 @@
+[INFO] [launch]: All log files can be found below /home/drail/.ros/log/2025-11-29-21-47-55-920787-drail-11-15919
+[INFO] [launch]: Default logging verbosity is set to INFO
+
+ --- Cranfield University --- 
+        (c) IFRA Group        
+
+ros2_RobotSimulation --> PANDA ROBOT
+Launch file -> panda_interface.launch.py
+
+Robot configuration:
+
+- Cell layout:
+     + Option N1: PANDA ROBOT alone.
+     + Option N2: PANDA ROBOT on top of a pedestal.
+  Please select: 
+- End-effector:
+     + No EE variants for this robot.
+
+[INFO] [gzserver-1]: process started with pid [15921]
+[INFO] [gzclient-2]: process started with pid [15923]
+[INFO] [spawn_entity.py-3]: process started with pid [15925]
+[INFO] [static_transform_publisher-4]: process started with pid [15927]
+[INFO] [robot_state_publisher-5]: process started with pid [15929]
+[static_transform_publisher-4] [WARN] [1764481677.030632183] []: Old-style arguments are deprecated; see --help for new-style arguments
+[static_transform_publisher-4] [INFO] [1764481677.069323491] [static_transform_publisher]: Spinning until stopped - publishing transform
+[static_transform_publisher-4] translation: ('0.000000', '0.000000', '0.000000')
+[static_transform_publisher-4] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[static_transform_publisher-4] from 'world' to 'base_link'
+[robot_state_publisher-5] [INFO] [1764481677.082168125] [robot_state_publisher]: got segment end_effector_frame
+[robot_state_publisher-5] [INFO] [1764481677.082840572] [robot_state_publisher]: got segment panda_base
+[robot_state_publisher-5] [INFO] [1764481677.082855099] [robot_state_publisher]: got segment panda_hand
+[robot_state_publisher-5] [INFO] [1764481677.082861942] [robot_state_publisher]: got segment panda_leftfinger
+[robot_state_publisher-5] [INFO] [1764481677.082868935] [robot_state_publisher]: got segment panda_link0
+[robot_state_publisher-5] [INFO] [1764481677.082875417] [robot_state_publisher]: got segment panda_link1
+[robot_state_publisher-5] [INFO] [1764481677.082881719] [robot_state_publisher]: got segment panda_link2
+[robot_state_publisher-5] [INFO] [1764481677.082888031] [robot_state_publisher]: got segment panda_link3
+[robot_state_publisher-5] [INFO] [1764481677.082894273] [robot_state_publisher]: got segment panda_link4
+[robot_state_publisher-5] [INFO] [1764481677.082900524] [robot_state_publisher]: got segment panda_link5
+[robot_state_publisher-5] [INFO] [1764481677.082906796] [robot_state_publisher]: got segment panda_link6
+[robot_state_publisher-5] [INFO] [1764481677.082913228] [robot_state_publisher]: got segment panda_link7
+[robot_state_publisher-5] [INFO] [1764481677.082919370] [robot_state_publisher]: got segment panda_link8
+[robot_state_publisher-5] [INFO] [1764481677.082925762] [robot_state_publisher]: got segment panda_rightfinger
+[robot_state_publisher-5] [INFO] [1764481677.082931974] [robot_state_publisher]: got segment world
+[ERROR] [gzserver-1]: process has died [pid 15921, exit code 255, cmd 'gzserver /home/drail/dev_ws/install/panda_ros2_gazebo/share/panda_ros2_gazebo/worlds/panda.world -slibgazebo_ros_init.so -slibgazebo_ros_factory.so -slibgazebo_ros_force_system.so'].
+[spawn_entity.py-3] [INFO] [1764481677.548531647] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-3] [INFO] [1764481677.549542480] [spawn_entity]: Loading entity published on topic robot_description
+[spawn_entity.py-3] [INFO] [1764481677.554009932] [spawn_entity]: Waiting for entity xml on robot_description
+[spawn_entity.py-3] [INFO] [1764481678.461209833] [spawn_entity]: Waiting for service /spawn_entity, timeout = 30
+[spawn_entity.py-3] [INFO] [1764481678.461590630] [spawn_entity]: Waiting for service /spawn_entity
+[spawn_entity.py-3] [INFO] [1764481678.467462425] [spawn_entity]: Calling service /spawn_entity
+[spawn_entity.py-3] [INFO] [1764481678.487167506] [spawn_entity]: Spawn status: Entity [panda] already exists.
+[spawn_entity.py-3] [ERROR] [1764481678.487510802] [spawn_entity]: Spawn service failed. Exiting.
+[ERROR] [spawn_entity.py-3]: process has died [pid 15925, exit code 1, cmd '/opt/ros/humble/lib/gazebo_ros/spawn_entity.py -topic robot_description -entity panda --ros-args'].
+[INFO] [spawner-6]: process started with pid [16116]
+[spawner-6] [INFO] [1764481678.920616967] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[spawner-6] [WARN] [1764481679.927735465] [spawner_joint_state_broadcaster]: [93mController already loaded, skipping load_controller[0m
+[spawner-6] [ERROR] [1764481679.929792799] [spawner_joint_state_broadcaster]: [91mFailed to configure controller[0m
+[ERROR] [spawner-6]: process has died [pid 16116, exit code 1, cmd '/opt/ros/humble/lib/controller_manager/spawner joint_state_broadcaster --controller-manager /controller_manager --ros-args'].
+[INFO] [spawner-7]: process started with pid [16165]
+[spawner-7] [INFO] [1764481680.349074695] [spawner_panda_arm_controller]: waiting for service /controller_manager/list_controllers to become available...
+[spawner-7] [WARN] [1764481681.366532541] [spawner_panda_arm_controller]: [93mController already loaded, skipping load_controller[0m
+[spawner-7] [ERROR] [1764481681.369618150] [spawner_panda_arm_controller]: [91mFailed to configure controller[0m
+[ERROR] [spawner-7]: process has died [pid 16165, exit code 1, cmd '/opt/ros/humble/lib/controller_manager/spawner panda_arm_controller -c /controller_manager --ros-args'].
+[INFO] [spawner-8]: process started with pid [16249]
+[spawner-8] [INFO] [1764481682.503807488] [spawner_panda_handleft_controller]: waiting for service /controller_manager/list_controllers to become available...
+[spawner-8] [WARN] [1764481683.508617009] [spawner_panda_handleft_controller]: [93mController already loaded, skipping load_controller[0m
+[spawner-8] [ERROR] [1764481683.512809543] [spawner_panda_handleft_controller]: [91mFailed to configure controller[0m
+[ERROR] [spawner-8]: process has died [pid 16249, exit code 1, cmd '/opt/ros/humble/lib/controller_manager/spawner panda_handleft_controller -c /controller_manager --ros-args'].
+[INFO] [spawner-9]: process started with pid [16340]
+[spawner-9] [INFO] [1764481683.957509656] [spawner_panda_handright_controller]: waiting for service /controller_manager/list_controllers to become available...
+[spawner-9] [WARN] [1764481684.960808964] [spawner_panda_handright_controller]: [93mController already loaded, skipping load_controller[0m
+[spawner-9] [ERROR] [1764481684.962896173] [spawner_panda_handright_controller]: [91mFailed to configure controller[0m
+[ERROR] [spawner-9]: process has died [pid 16340, exit code 1, cmd '/opt/ros/humble/lib/controller_manager/spawner panda_handright_controller -c /controller_manager --ros-args'].
+[INFO] [moveJs_action-10]: process started with pid [16414]
+[INFO] [moveG_action-11]: process started with pid [16416]
+[INFO] [moveL_action-12]: process started with pid [16418]
+[INFO] [moveRs_action-13]: process started with pid [16420]
+[INFO] [moveXYZ_action-14]: process started with pid [16422]
+[INFO] [moveXYZW_action-15]: process started with pid [16424]
+[INFO] [moveYPR_action-16]: process started with pid [16426]
+[INFO] [moveROT_action-17]: process started with pid [16428]
+[INFO] [moveRP_action-18]: process started with pid [16430]
+[INFO] [attacher_action.py-19]: process started with pid [16433]
+[moveRP_action-18] [INFO] [1764481687.557531407] [moveRP_action]: ROB_PARAM received -> panda_arm
+[moveRP_action-18] [WARN] [1764481687.557802227] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveROT_action-17] [INFO] [1764481687.563807464] [moveROT_action]: ROB_PARAM received -> panda_arm
+[moveROT_action-17] [WARN] [1764481687.564100305] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveYPR_action-16] [INFO] [1764481687.566871513] [moveYPR_action]: ROB_PARAM received -> panda_arm
+[moveYPR_action-16] [WARN] [1764481687.567105683] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveRs_action-13] [INFO] [1764481687.569046548] [moveRs_action]: ROB_PARAM received -> panda_arm
+[moveRs_action-13] [WARN] [1764481687.569313590] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveXYZW_action-15] [INFO] [1764481687.570949220] [moveXYZW_action]: ROB_PARAM received -> panda_arm
+[moveXYZW_action-15] [WARN] [1764481687.571192588] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveG_action-11] [INFO] [1764481687.574162360] [moveG_action]: ROB_PARAM received -> panda_gripper
+[moveG_action-11] [WARN] [1764481687.580675453] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveYPR_action-16] [INFO] [1764481687.592975752] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveYPR_action-16] [INFO] [1764481687.593012200] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveRP_action-18] [INFO] [1764481687.599241238] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveRP_action-18] [INFO] [1764481687.599271025] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveXYZW_action-15] [INFO] [1764481687.599241409] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveXYZW_action-15] [INFO] [1764481687.599273068] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveRs_action-13] [INFO] [1764481687.602886422] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveRs_action-13] [INFO] [1764481687.602912621] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveJs_action-10] [INFO] [1764481687.606554868] [moveJs_action]: ROB_PARAM received -> panda_arm
+[moveG_action-11] [INFO] [1764481687.606897283] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveG_action-11] [INFO] [1764481687.606921599] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveJs_action-10] [WARN] [1764481687.906984279] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveL_action-12] [INFO] [1764481687.921869465] [moveL_action]: ROB_PARAM received -> panda_arm
+[moveL_action-12] [WARN] [1764481687.922190529] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveROT_action-17] [INFO] [1764481687.937556250] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveROT_action-17] [INFO] [1764481687.937594311] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveXYZ_action-14] [INFO] [1764481687.964007162] [moveXYZ_action]: ROB_PARAM received -> panda_arm
+[moveXYZ_action-14] [WARN] [1764481687.968740654] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveL_action-12] [INFO] [1764481687.980432086] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveL_action-12] [INFO] [1764481687.980467002] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveXYZ_action-14] [INFO] [1764481688.015295528] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveXYZ_action-14] [INFO] [1764481688.015332387] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveJs_action-10] [INFO] [1764481688.071418777] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[moveJs_action-10] [INFO] [1764481688.071459313] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[moveG_action-11] [INFO] [1764481688.713606041] [move_group_interface]: Ready to take commands for planning group panda_gripper.
+[moveL_action-12] [INFO] [1764481688.734378321] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveROT_action-17] [INFO] [1764481688.739855433] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveG_action-11] [WARN] [1764481688.767892501] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveL_action-12] [WARN] [1764481688.774760593] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveROT_action-17] [WARN] [1764481688.787223338] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveXYZ_action-14] [INFO] [1764481688.805545865] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveRs_action-13] [INFO] [1764481688.820209795] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveRP_action-18] [INFO] [1764481688.825700152] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveXYZ_action-14] [WARN] [1764481688.846181294] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveRs_action-13] [WARN] [1764481688.856178126] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveRP_action-18] [WARN] [1764481688.866961048] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveYPR_action-16] [INFO] [1764481689.061750819] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveYPR_action-16] [WARN] [1764481689.100085316] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveJs_action-10] [INFO] [1764481689.126220814] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveXYZW_action-15] [INFO] [1764481689.145829173] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[moveJs_action-10] [WARN] [1764481689.153058093] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[moveXYZW_action-15] [WARN] [1764481689.169165520] [rcl.logging_rosout]: Publisher already registered for provided node name. If this is due to multiple nodes with the same name then all logs for that logger name will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.
+[INFO] [rviz2-20]: process started with pid [16664]
+[INFO] [move_group-21]: process started with pid [16666]
+[move_group-21] [WARN] [1764481690.403290067] [move_group.move_group]: Falling back to using the the move_group node namespace (deprecated behavior).
+[move_group-21] [INFO] [1764481690.413923638] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[move_group-21] [INFO] [1764481690.413952472] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[move_group-21] [INFO] [1764481691.124277436] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Publishing maintained planning scene on 'monitored_planning_scene'
+[move_group-21] [INFO] [1764481691.124707916] [moveit.ros_planning_interface.moveit_cpp]: Listening to 'joint_states' for joint states
+[move_group-21] [INFO] [1764481691.130864758] [moveit_ros.current_state_monitor]: Listening to joint states on topic 'joint_states'
+[move_group-21] [INFO] [1764481691.138017255] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to '/attached_collision_object' for attached collision objects
+[move_group-21] [INFO] [1764481691.138036040] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Starting planning scene monitor
+[move_group-21] [INFO] [1764481691.139867879] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to '/planning_scene'
+[move_group-21] [INFO] [1764481691.139882407] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.
+[move_group-21] [INFO] [1764481691.141931354] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to 'collision_object'
+[move_group-21] [INFO] [1764481691.143835219] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to 'planning_scene_world' for planning scene world geometry
+[move_group-21] [WARN] [1764481691.145425363] [moveit.ros.occupancy_map_monitor.middleware_handle]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead
+[move_group-21] [ERROR] [1764481691.145442816] [moveit.ros.occupancy_map_monitor.middleware_handle]: No 3D sensor plugin(s) defined for octomap updates
+[move_group-21] [INFO] [1764481691.153875313] [moveit.ros_planning_interface.moveit_cpp]: Loading planning pipeline 'move_group'
+[move_group-21] [INFO] [1764481691.173570355] [moveit.ros_planning.planning_pipeline]: Using planning interface 'OMPL'
+[move_group-21] [INFO] [1764481691.178717085] [moveit_ros.add_time_optimal_parameterization]: Param 'move_group.path_tolerance' was not set. Using default value: 0.100000
+[move_group-21] [INFO] [1764481691.178728176] [moveit_ros.add_time_optimal_parameterization]: Param 'move_group.resample_dt' was not set. Using default value: 0.100000
+[move_group-21] [INFO] [1764481691.178731762] [moveit_ros.add_time_optimal_parameterization]: Param 'move_group.min_angle_change' was not set. Using default value: 0.001000
+[move_group-21] [INFO] [1764481691.178748774] [moveit_ros.fix_workspace_bounds]: Param 'move_group.default_workspace_bounds' was not set. Using default value: 10.000000
+[move_group-21] [INFO] [1764481691.178757170] [moveit_ros.fix_start_state_bounds]: Param 'move_group.start_state_max_bounds_error' was set to 0.100000
+[move_group-21] [INFO] [1764481691.178760787] [moveit_ros.fix_start_state_bounds]: Param 'move_group.start_state_max_dt' was not set. Using default value: 0.500000
+[move_group-21] [INFO] [1764481691.178767249] [moveit_ros.fix_start_state_collision]: Param 'move_group.start_state_max_dt' was not set. Using default value: 0.500000
+[move_group-21] [INFO] [1764481691.178770606] [moveit_ros.fix_start_state_collision]: Param 'move_group.jiggle_fraction' was not set. Using default value: 0.020000
+[move_group-21] [INFO] [1764481691.178779262] [moveit_ros.fix_start_state_collision]: Param 'move_group.max_sampling_attempts' was not set. Using default value: 100
+[move_group-21] [INFO] [1764481691.178786005] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Add Time Optimal Parameterization'
+[move_group-21] [INFO] [1764481691.178790032] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Resolve constraint frames to robot links'
+[move_group-21] [INFO] [1764481691.178792346] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Workspace Bounds'
+[move_group-21] [INFO] [1764481691.178794711] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State Bounds'
+[move_group-21] [INFO] [1764481691.178796945] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State In Collision'
+[move_group-21] [INFO] [1764481691.178820740] [moveit.ros_planning.planning_pipeline]: Using planning request adapter 'Fix Start State Path Constraints'
+[move_group-21] [INFO] [1764481691.265342955] [moveit.plugins.moveit_simple_controller_manager]: Added FollowJointTrajectory controller for panda_arm_controller
+[move_group-21] [INFO] [1764481691.265392117] [moveit.plugins.moveit_simple_controller_manager]: Max effort set to 0.0
+[move_group-21] [INFO] [1764481691.270494674] [moveit.plugins.moveit_simple_controller_manager]: Added GripperCommand controller for panda_handleft_controller
+[move_group-21] [INFO] [1764481691.270516946] [moveit.plugins.moveit_simple_controller_manager]: Max effort set to 0.0
+[move_group-21] [INFO] [1764481691.274522257] [moveit.plugins.moveit_simple_controller_manager]: Added GripperCommand controller for panda_handright_controller
+[move_group-21] [INFO] [1764481691.274641331] [moveit.plugins.moveit_simple_controller_manager]: Returned 3 controllers in list
+[move_group-21] [INFO] [1764481691.274702637] [moveit.plugins.moveit_simple_controller_manager]: Returned 3 controllers in list
+[move_group-21] [INFO] [1764481691.275554090] [moveit_ros.trajectory_execution_manager]: Trajectory execution is managing controllers
+[move_group-21] [INFO] [1764481691.275566794] [move_group.move_group]: MoveGroup debug mode is ON
+[rviz2-20] [INFO] [1764481691.294233420] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-20] [INFO] [1764481691.294375247] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[move_group-21] [INFO] [1764481691.304430389] [move_group.move_group]: 
+[move_group-21] 
+[move_group-21] ********************************************************
+[move_group-21] * MoveGroup using: 
+[move_group-21] *     - ApplyPlanningSceneService
+[move_group-21] *     - ClearOctomapService
+[move_group-21] *     - CartesianPathService
+[move_group-21] *     - ExecuteTrajectoryAction
+[move_group-21] *     - GetPlanningSceneService
+[move_group-21] *     - KinematicsService
+[move_group-21] *     - MoveAction
+[move_group-21] *     - MotionPlanService
+[move_group-21] *     - QueryPlannersService
+[move_group-21] *     - StateValidationService
+[move_group-21] ********************************************************
+[move_group-21] 
+[move_group-21] [INFO] [1764481691.304464212] [moveit_move_group_capabilities_base.move_group_context]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner
+[move_group-21] [INFO] [1764481691.304470314] [moveit_move_group_capabilities_base.move_group_context]: MoveGroup context initialization complete
+[move_group-21] [96mLoading 'move_group/ApplyPlanningSceneService'...
+[move_group-21] [0m[96mLoading 'move_group/ClearOctomapService'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupPlanService'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[move_group-21] [0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[move_group-21] [0m[92m
+[move_group-21] You can start planning now!
+[move_group-21] 
+[rviz2-20] [INFO] [1764481691.399589845] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-20] Warning: class_loader.impl: SEVERE WARNING!!! A namespace collision has occurred with plugin factory for class rviz_default_plugins::displays::InteractiveMarkerDisplay. New factory will OVERWRITE existing one. This situation occurs when libraries containing plugins are directly linked against an executable (the one running right now generating this message). Please separate plugins out into their own library or just don't link against the library and use either class_loader::ClassLoader/MultiLibraryClassLoader to open.
+[rviz2-20]          at line 253 in /opt/ros/humble/include/class_loader/class_loader/class_loader_core.hpp
+[rviz2-20] [ERROR] [1764481694.548355688] [moveit_ros_visualization.motion_planning_frame]: Action server: /recognize_objects not available
+[rviz2-20] [INFO] [1764481694.582602298] [moveit_ros_visualization.motion_planning_frame]: MoveGroup namespace changed: / -> . Reloading params.
+[rviz2-20] [INFO] [1764481694.644488508] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0 seconds
+[rviz2-20] [INFO] [1764481694.644520047] [moveit_robot_model.robot_model]: Loading robot model 'panda'...
+[rviz2-20] [INFO] [1764481694.704656072] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Starting planning scene monitor
+[rviz2-20] [INFO] [1764481694.705538714] [moveit_ros.planning_scene_monitor.planning_scene_monitor]: Listening to '/monitored_planning_scene'
+[rviz2-20] [INFO] [1764481694.915663888] [interactive_marker_display_110962713483472]: Connected on namespace: /rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic
+[rviz2-20] [INFO] [1764481694.922944547] [moveit_ros_visualization.motion_planning_frame]: group panda_arm
+[rviz2-20] [INFO] [1764481694.922959034] [moveit_ros_visualization.motion_planning_frame]: Constructing new MoveGroup connection for group 'panda_arm' in namespace ''
+[rviz2-20] [INFO] [1764481694.943615376] [interactive_marker_display_110962713483472]: Sending request for interactive markers
+[rviz2-20] [INFO] [1764481694.946683823] [move_group_interface]: Ready to take commands for planning group panda_arm.
+[rviz2-20] [INFO] [1764481694.947734672] [moveit_ros_visualization.motion_planning_frame]: group panda_arm
+[rviz2-20] [INFO] [1764481694.947807368] [moveit_ros_visualization.motion_planning_frame]: group panda_arm
+[rviz2-20] [INFO] [1764481694.978722856] [interactive_marker_display_110962713483472]: Service response received for initialization

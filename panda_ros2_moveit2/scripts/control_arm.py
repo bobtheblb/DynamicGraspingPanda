@@ -107,14 +107,14 @@ def main(args=None):
         (goal_x, goal_y, goal_z) = node.get_box_state()
 
         # 1. Open Hand (0.08m)
-        node.grip(0.08)
+        node.grip(0.04)
 
         # 2. Ready Position (High up)
         # X=0.5, Z=0.6, Pitch=180 (Pointing straight down)
         node.move_to_pose(0.106, 0.0, 1.7, -90, -45, -90)
         time.sleep(0.5)
 
-        node.move_to_pose(goal_x, goal_y, goal_z + 0.1, 0, 180, 0)
+        node.move_to_pose(goal_x, goal_y, goal_z + 0.15, 0, 180, 0)
         time.sleep(0.5)
 
         # 3. Grasp Position (Low, near conveyor)
