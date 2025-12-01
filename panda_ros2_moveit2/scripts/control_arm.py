@@ -6,6 +6,7 @@ import time
 
 # Imports for Cartesian & Gripper Control
 from ros2_data.action import MoveXYZW, MoveXYZ, MoveG
+from std_msgs.msg import String
 from ros2_grasping.action import Attacher
 
 from gazebo_msgs.srv import GetEntityState
@@ -27,6 +28,8 @@ class CartesianPanda(Node):
         self._gripper_client = ActionClient(self, MoveG, self.gripper_topic)
         self._attacher_client = ActionClient(self, Attacher, self.attach_topic)
 
+        self._detach_publisher = self.create_publisher(String, "ros2_Detach", 5)
+
         self.get_logger().info('Waiting for Action Servers...')
         self._xyzw_client.wait_for_server()
         self._xyz_client.wait_for_server()
@@ -41,7 +44,7 @@ class CartesianPanda(Node):
         self._box_state_req.name = 'box'
         self._box_state_req.reference_frame = 'world'
 
-        self._planning_upper_bound = 4.5
+        self._planning_upper_bound = 3
 
     def get_box_state(self):
         future = self._box_state_client.call_async(self._box_state_req)
@@ -166,6 +169,15 @@ class CartesianPanda(Node):
         #     self.get_logger().error('[Attach] Movement Timed Out!')
         #     return False
 
+    def detach(self):
+        self.get_logger().info("Detaching")
+        msg = String()
+        msg.data = "True"
+
+        t_end = time.time() + 3
+        while time.time() < t_end:
+            self._detach_publisher.publish(msg)
+
     def grip(self, width=0.0):
         """
         Control Gripper. 
@@ -216,10 +228,12 @@ def main(args=None):
 
             # Wait until box is back in grasping zone again
             (x, y, z), (vx, vy, vz) = node.get_box_state()
-            while y < -0.5 or z > 0.76 + 0.2 or y > -0.3 or (x == 0 and y == 0 and z == 0):
+            while y < -0.45 or z > 0.76 + 0.2 or y > -0.3 or (x == 0 and y == 0 and z == 0):
                 (x, y, z), (vx, vy, vz) = node.get_box_state()
 
                 time.sleep(0.1)
+
+            node.grip(0.0)
 
             st = time.time()
 
@@ -240,12 +254,23 @@ def main(args=None):
             # Wait for the cube to pass
             while True:
                 (x, y, z), _ = node.get_box_state()
-                if abs(y - predicted_y) <= 0.01:
+                if abs(y - predicted_y) <= 0.01 and z > 0.7:
                     node.grip(0.025)
                     node.attach()
 
                     node.move_to_xyzw(0.33, 0.0, 0.76 + 0.5, 45, 180, 0)
+                    (x, y, z), _ = node.get_box_state()
+                    if ((x - 0.33)**2 + (y - 0.0)**2 + (z - (0.76 + 0.5))**2) < 0.1:
+                        success = True
+                    else:
+                        success = False
+                    node.detach()
                     break
+                elif z < 0.5:
+                    success = False
+                    break
+
+            print(f"Grasp Success: {success}")
 
             grasping_time = time.time() - st
             node.get_logger().info(f"Completed grasp in {grasping_time} seconds")
