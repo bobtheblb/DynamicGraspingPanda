@@ -5,7 +5,7 @@ from rclpy.action import ActionClient
 import time
 
 # Imports for Cartesian & Gripper Control
-from ros2_data.action import MoveXYZW, MoveG
+from ros2_data.action import MoveXYZW, MoveXYZ, MoveG
 
 from gazebo_msgs.srv import GetEntityState
 
@@ -14,15 +14,18 @@ class CartesianPanda(Node):
         super().__init__('cartesian_panda_client')
         
         # Configuration
-        self.xyz_topic = '/MoveXYZW'
+        self.xyzw_topic = '/MoveXYZW'
+        self.xyz_topic = '/MoveXYZ'
         self.gripper_topic = '/MoveG'
         
         # Clients
         self.get_logger().info('Initializing Cartesian Clients...')
-        self._xyz_client = ActionClient(self, MoveXYZW, self.xyz_topic)
+        self._xyzw_client = ActionClient(self, MoveXYZW, self.xyzw_topic)
+        self._xyz_client = ActionClient(self, MoveXYZ, self.xyz_topic)
         self._gripper_client = ActionClient(self, MoveG, self.gripper_topic)
         
         self.get_logger().info('Waiting for Action Servers...')
+        self._xyzw_client.wait_for_server()
         self._xyz_client.wait_for_server()
         self._gripper_client.wait_for_server()
         self.get_logger().info('Servers Found! Ready to move.')
@@ -45,7 +48,7 @@ class CartesianPanda(Node):
         twist = state.twist.linear
         return ((pose.x, pose.y, pose.z), (twist.x, twist.y, twist.z))
 
-    def move_to_pose(self, x, y, z, yaw, pitch, roll, speed=1.0):
+    def move_to_xyzw(self, x, y, z, yaw, pitch, roll, speed=1.0):
         """
         Moves the End Effector to a specific X,Y,Z coordinate (Meters)
         and Orientation (Degrees).
@@ -61,6 +64,46 @@ class CartesianPanda(Node):
         goal_msg.yaw = float(yaw)
         goal_msg.pitch = float(pitch)
         goal_msg.roll = float(roll)
+        goal_msg.speed = float(speed)
+
+        # Send Goal
+        send_future = self._xyzw_client.send_goal_async(goal_msg)
+        rclpy.spin_until_future_complete(self, send_future, timeout_sec=5.0)
+        
+        if not send_future.done():
+            self.get_logger().error('Goal Send Timed Out!')
+            return False
+            
+        goal_handle = send_future.result()
+        if not goal_handle.accepted:
+            self.get_logger().error('Goal Rejected!')
+            return False
+            
+        self.get_logger().info('Goal Accepted. Moving...')
+        
+        # Wait for Result
+        res_future = goal_handle.get_result_async()
+        rclpy.spin_until_future_complete(self, res_future, timeout_sec=15.0)
+        
+        if res_future.done():
+            self.get_logger().info('Movement Complete.')
+            return True
+        else:
+            self.get_logger().error('Movement Timed Out!')
+            return False
+
+    def move_to_xyz(self, x, y, z, speed=1.0):
+        """
+        Moves the End Effector to a specific X,Y,Z coordinate (Meters).
+        """
+        self.get_logger().info(f'\n>>> MOVING TO: X={x:.2f}, Y={y:.2f}, Z={z:.2f}')
+        
+        goal_msg = MoveXYZ.Goal()
+        
+        # Fill fields
+        goal_msg.positionx = float(x)
+        goal_msg.positiony = float(y)
+        goal_msg.positionz = float(z)
         goal_msg.speed = float(speed)
 
         # Send Goal
@@ -101,29 +144,53 @@ class CartesianPanda(Node):
         msg.goal = float(width) # FIX: Send float, not string
         
         send_future = self._gripper_client.send_goal_async(msg)
-        time.sleep(5)
+        rclpy.spin_until_future_complete(self, send_future, timeout_sec=5.0)
+        
+        if not send_future.done():
+            self.get_logger().error('Goal Send Timed Out!')
+            return False
+            
+        goal_handle = send_future.result()
+        if not goal_handle.accepted:
+            self.get_logger().error('Goal Rejected!')
+            return False
+            
+        self.get_logger().info('Goal Accepted. Moving...')
+        
+        # Wait for Result
+        res_future = goal_handle.get_result_async()
+        rclpy.spin_until_future_complete(self, res_future, timeout_sec=15.0)
+        
+        if res_future.done():
+            self.get_logger().info('Movement Complete.')
+            return True
+        else:
+            self.get_logger().error('Movement Timed Out!')
+            return False
 
 def main(args=None):
     rclpy.init(args=args)
     node = CartesianPanda()
 
+    print("Launched node")
+
     try:
         # 1. Open Hand (0.08m)
-        # node.grip(0.04)
+        node.grip(0.04)
 
         # 2. Ready Position (High up)
         # X=0.5, Z=0.6, Pitch=180 (Pointing straight down)
-        node.move_to_pose(0.106, 0.0, 1.7, -90, -45, -90)
-        
-        (x, y, z), (vx, vy, vz) = node.get_box_state()
-        node.get_logger().info(f"Got box state: {((x, y, z), (vx, vy, vz))}")
+        node.move_to_xyzw(0.3, 0.0, 1.2, 45, 180, 0)
 
-        predicted_x = x
-        predicted_y = y + vy * (node._planning_upper_bound)
-        predicted_z = z
-        node.get_logger().info(f"Predicted box pose: {(predicted_x, predicted_y, predicted_z)}")
+        for height in (0.2, 0.1):
+            (x, y, z), (vx, vy, vz) = node.get_box_state()
+            node.get_logger().info(f"Got box state: {((x, y, z), (vx, vy, vz))}")
+            predicted_x = x
+            predicted_y = y + vy * (node._planning_upper_bound)
+            predicted_z = z
+            node.get_logger().info(f"Predicted box pose: {(predicted_x, predicted_y, predicted_z)}")
 
-        node.move_to_pose(predicted_x, predicted_y, predicted_z + 0.15, 0, 180, 0)
+            node.move_to_xyz(predicted_x, predicted_y, predicted_z + height)
 
         # node.grip(0.0)
 
