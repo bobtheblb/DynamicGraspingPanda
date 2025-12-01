@@ -4,12 +4,11 @@ source ~/dev_ws/install/setup.bash
 
 xs=(0.23 0.33 0.43)
 powers=(5 7.5 10)
-trials=(1)
-for x in "${xs[@]}"; do
-    for power in "${powers[@]}"; do
+trials=(1, 2, 3)
+for power in "${powers[@]}"; do
+    for x in "${xs[@]}"; do
         for trial in "${trials[@]}"; do
-            echo CURRENT RUN = x: $x, power: $power, trial: $trial
-            while true; do
+            echo CURRENT RUN = power: $power, x: $x, trial: $trial
                 while true; do
                     echo "[CONVEYOR] Sending power command... $power"
 
@@ -26,7 +25,8 @@ for x in "${xs[@]}"; do
                 done
 
                 ros2 run ros2_conveyorbelt SpawnObject.py --package "conveyorbelt_gazebo" --urdf "box.urdf" --name "box" --x $x --y -0.5 --z 0.76
-                sleep 25
+                echo "Done spawning, now can start trial"
+                sleep 30
 
                 while true; do
                     echo "[SPAWNER] Deleting object..."
@@ -48,7 +48,6 @@ for x in "${xs[@]}"; do
                 done
 
                 sleep 5
-            done
         done
     done
 done

@@ -224,10 +224,10 @@ def main(args=None):
     print("Launched node")
 
     try:
-        for x_ix in range(3):
-            for power_ix in range(3):
+        for power_ix in range(3):
+            for x_ix in range(3):
                 for trial_ix in range(3):
-                    node.get_logger().info(f"X ix = {x_ix}, power ix = {power_ix}, trial ix = {trial_ix}")
+                    print(f"Power ix = {power_ix}, X ix = {x_ix}, trial ix = {trial_ix}")
                     # 2. Ready Position (High up)
                     # X=0.5, Z=0.6, Pitch=180 (Pointing straight down)
                     node.move_to_xyzw(0.33, 0.0, 0.76 + 0.5, 45, 180, 0)
