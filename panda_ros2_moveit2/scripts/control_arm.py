@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
 import time
+import numpy as np
 
 # Imports for Cartesian & Gripper Control
 from ros2_data.action import MoveXYZW, MoveXYZ, MoveG
@@ -10,6 +11,8 @@ from std_msgs.msg import String
 from ros2_grasping.action import Attacher
 
 from gazebo_msgs.srv import GetEntityState
+
+RESULTS = np.zeros((3, 3, 3, 2))
 
 class CartesianPanda(Node):
     def __init__(self):
@@ -44,7 +47,7 @@ class CartesianPanda(Node):
         self._box_state_req.name = 'box'
         self._box_state_req.reference_frame = 'world'
 
-        self._planning_upper_bound = 4
+        self._planning_upper_bound = 3.5
 
     def get_box_state(self):
         future = self._box_state_client.call_async(self._box_state_req)
@@ -221,59 +224,69 @@ def main(args=None):
     print("Launched node")
 
     try:
-        while True:
-            # 2. Ready Position (High up)
-            # X=0.5, Z=0.6, Pitch=180 (Pointing straight down)
-            node.move_to_xyzw(0.33, 0.0, 0.76 + 0.5, 45, 180, 0)
-
-            # Wait until box is back in grasping zone again
-            (x, y, z), (vx, vy, vz) = node.get_box_state()
-            while y < -0.45 or z > 0.76 + 0.2 or y > -0.3 or (x == 0 and y == 0 and z == 0):
-                (x, y, z), (vx, vy, vz) = node.get_box_state()
-
-                time.sleep(0.1)
-
-            node.grip(0.0)
-
-            st = time.time()
-
-            # 1. Open Hand
-            node.grip(0.04)
-
-            # Multi-step Predictive IK
-            for height in (0.3, 0.1):
-                (x, y, z), (vx, vy, vz) = node.get_box_state()
-                # node.get_logger().info(f"Got box state: {((x, y, z), (vx, vy, vz))}")
-                predicted_x = x
-                predicted_y = y + vy * (node._planning_upper_bound)
-                predicted_z = z
-                # node.get_logger().info(f"Predicted box pose: {(predicted_x, predicted_y, predicted_z)}")
-
-                node.move_to_xyzw(predicted_x, predicted_y, predicted_z + height, 45, 180, 0)
-
-            # Wait for the cube to pass
-            while True:
-                (x, y, z), _ = node.get_box_state()
-                if abs(y - predicted_y) <= 0.01 and z > 0.7:
-                    node.grip(0.025)
-                    node.attach()
-
+        for x_ix in range(3):
+            for power_ix in range(3):
+                for trial_ix in range(3):
+                    node.get_logger().info(f"X ix = {x_ix}, power ix = {power_ix}, trial ix = {trial_ix}")
+                    # 2. Ready Position (High up)
+                    # X=0.5, Z=0.6, Pitch=180 (Pointing straight down)
                     node.move_to_xyzw(0.33, 0.0, 0.76 + 0.5, 45, 180, 0)
-                    (x, y, z), _ = node.get_box_state()
-                    if ((x - 0.33)**2 + (y - 0.0)**2 + (z - (0.76 + 0.5))**2) < 0.1:
-                        success = True
-                    else:
-                        success = False
-                    node.detach()
-                    break
-                elif z < 0.5:
-                    success = False
-                    break
 
-            print(f"Grasp Success: {success}")
+                    # Wait until box is back in grasping zone again
+                    (x, y, z), (vx, vy, vz) = node.get_box_state()
+                    while y < -0.45 or z > 0.76 + 0.2 or y > -0.3 or (x == 0 and y == 0 and z == 0):
+                        (x, y, z), (vx, vy, vz) = node.get_box_state()
 
-            grasping_time = time.time() - st
-            node.get_logger().info(f"Completed grasp in {grasping_time} seconds")
+                        time.sleep(0.1)
+
+                    node.grip(0.0)
+
+                    st = time.time()
+
+                    # 1. Open Hand
+                    node.grip(0.04)
+
+                    # Multi-step Predictive IK
+                    for height in (0.3, 0.1):
+                        (x, y, z), (vx, vy, vz) = node.get_box_state()
+                        # node.get_logger().info(f"Got box state: {((x, y, z), (vx, vy, vz))}")
+                        predicted_x = x
+                        predicted_y = y + vy * (node._planning_upper_bound)
+                        predicted_z = z
+                        # node.get_logger().info(f"Predicted box pose: {(predicted_x, predicted_y, predicted_z)}")
+
+                        node.move_to_xyzw(predicted_x, predicted_y, predicted_z + height, 45, 180, 0)
+
+                    # Wait for the cube to pass
+                    while True:
+                        (x, y, z), _ = node.get_box_state()
+                        if abs(y - predicted_y) <= 0.01 and z > 0.7:
+                            node.grip(0.025)
+                            node.attach()
+
+                            node.move_to_xyzw(0.33, 0.0, 0.76 + 0.5, 45, 180, 0)
+                            (x, y, z), _ = node.get_box_state()
+                            if ((x - 0.33)**2 + (y - 0.0)**2 + (z - (0.76 + 0.5))**2) < 0.1:
+                                success = True
+                            else:
+                                success = False
+                            node.detach()
+                            break
+                        elif z < 0.5:
+                            success = False
+                            break
+
+                    print(f"Grasp Success: {success}")
+
+                    grasping_time = time.time() - st
+                    node.get_logger().info(f"Completed grasp in {grasping_time} seconds")
+
+                    if success:
+                        RESULTS[x_ix, power_ix, trial_ix, 0] = grasping_time
+                    
+                    RESULTS[x_ix, power_ix, trial_ix, 1] = success
+
+                    np.save(f"results_{node._planning_upper_bound}.npy", RESULTS)
 
     except KeyboardInterrupt:
         pass
