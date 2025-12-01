@@ -234,6 +234,16 @@ def generate_launch_description():
             "start_state_max_bounds_error": 0.1,
         }
     }
+
+    # Move group: OMPL Planning.
+    # ompl_planning_pipeline_config = {
+    #     "move_group": {
+    #         "planning_plugin": "pilz_industrial_motion_planner/CommandPlanner",
+    #         "request_adapters": """default_planner_request_adapters/AddTimeOptimalParameterization default_planner_request_adapters/FixWorkspaceBounds default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints""",
+    #         "start_state_max_bounds_error": 0.1,
+    #         "planner_configs": load_yaml("panda_ros2_moveit2", "config/pilz_planner_contexts.yaml")
+    #     }
+    # }
     ompl_planning_yaml = load_yaml("panda_ros2_moveit2", "config/ompl_planning.yaml")
     ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
 

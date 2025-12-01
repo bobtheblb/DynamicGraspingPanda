@@ -272,7 +272,7 @@ int main(int argc, char ** argv)
     geometry_msgs::msg::Pose box_pose;
    
     // Set the position of the box center
-    box_pose.position.x = 0.55;  // meters in x-direction
+    box_pose.position.x = 0.33;  // meters in x-direction
     box_pose.position.y = 0;   // Centered in y-direction
     box_pose.position.z = 0.365;  // meters in z-direction
    

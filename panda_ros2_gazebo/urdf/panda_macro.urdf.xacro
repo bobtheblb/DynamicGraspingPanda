@@ -290,7 +290,8 @@
       <parent link="panda_link5"/>
       <child link="panda_link6"/>
       <axis xyz="0 0 1"/>
-      <limit effort="12" lower="-0.0175" upper="3.7525" velocity="2.6100"/>
+      <limit effort="12" lower="-1.0" upper="3.7525" velocity="2.6100"/>
+      <initial_value value="1.0"/>
       <dynamics damping="5.0" friction="1.0"/>
     </joint>
 

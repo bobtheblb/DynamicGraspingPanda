@@ -1,0 +1,8 @@
+panda_arm:
+  contexts:
+    LIN:
+      type: "PilzIndustrialPlanner"
+      max_velocity_scaling_factor: 1.0
+      max_acceleration_scaling_factor: 1.0
+
+  default_context: "LIN"
