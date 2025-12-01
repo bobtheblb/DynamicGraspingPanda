@@ -26,10 +26,15 @@ while true; do
     while true; do
         echo "[SPAWNER] Deleting object..."
 
-        response=$(timeout 3ros2 service call /delete_entity gazebo_msgs/srv/DeleteEntity "{name: 'box'}" 2>/dev/null)
+        response=$(timeout 3 ros2 service call /delete_entity gazebo_msgs/srv/DeleteEntity "{name: 'box'}" 2>/dev/null)
 
-        if echo "$response" | grep -q "True"; then
+        if echo "$response" | grep -q "success: True"; then
             echo "[SPAWNER] Delete command succeeded."
+            break
+
+        # entity already gone
+        elif echo "$response" | grep -qi "does not exist"; then
+            echo "[SPAWNER] Box already gone."
             break
         fi
 

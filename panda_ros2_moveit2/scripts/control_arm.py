@@ -44,7 +44,7 @@ class CartesianPanda(Node):
         self._box_state_req.name = 'box'
         self._box_state_req.reference_frame = 'world'
 
-        self._planning_upper_bound = 3
+        self._planning_upper_bound = 4
 
     def get_box_state(self):
         future = self._box_state_client.call_async(self._box_state_req)
